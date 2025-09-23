@@ -1,0 +1,35 @@
+import sys
+
+from PySide6.QtCore import Qt, QRect
+from PySide6.QtGui import QColor, QPainter, QPen, QPixmap, QBrush
+from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.label = QLabel()
+        self.canvas = QPixmap(400,300)
+        self.canvas.fill(Qt.white)
+        self.label.setPixmap(self.canvas)
+        self.setCentralWidget(self.label)
+        self.draw_something()
+
+    def draw_something(self):
+        painter = QPainter(self.canvas)
+        pen = QPen()
+        pen.setWidth(3)
+        pen.setColor(QColor(204, 0, 0))
+        painter.setPen(pen)
+
+        painter.drawEllipse(10, 10, 100, 100)
+        painter.drawEllipse(10, 10, 150, 200)
+        painter.drawEllipse(10, 10, 200, 300)
+
+        painter.end()
+        self.label.setPixmap(self.canvas)
+
+app = QApplication(sys.argv)
+window = MainWindow()
+window.show()
+app.exec()
